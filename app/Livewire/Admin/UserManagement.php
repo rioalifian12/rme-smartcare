@@ -17,12 +17,10 @@ class UserManagement extends Component
 
     public $search = '';
 
-    // Properties Form User
     public $name, $email, $password, $role_id, $poly_id, $status = 'active';
     public $reset_password;
     public $selected_user_id;
 
-    // States Modal
     public $isCreateOpen = false;
     public $isEditOpen = false;
     public $isResetOpen = false;
@@ -126,7 +124,7 @@ class UserManagement extends Component
         $this->authorize('manage-master-data');
 
         $this->validate([
-            'reset_password' => 'required|min:6',
+            'reset_password' => 'required|min:8',
         ]);
 
         $user = User::findOrFail($this->selected_user_id);

@@ -31,7 +31,6 @@ class PolyclinicManagement extends Component
 
     public function render()
     {
-        // Proteksi Otorisasi Gate RBAC
         $this->authorize('manage-master-data');
 
         $polyclinics = Polyclinic::when($this->search, function ($q) {

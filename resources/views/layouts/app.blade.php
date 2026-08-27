@@ -25,7 +25,6 @@
                 <span class="sr-only">Toggle sidebar</span>
               </button>
               <a href="/dashboard" class="flex items-center justify-between mr-4">
-                <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="SmartCare Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SmartCare</span>
               </a>
             </div>
@@ -70,7 +69,7 @@
                   <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-left block py-2 px-4 text-sm text-red-600 hover:rounded-b-sm hover:bg-red-100 dark:hover:bg-gray-600 dark:text-red-400 dark:hover:text-white cursor-pointer">
+                        <button type="submit" class="w-full text-left block py-2 px-4 text-sm text-red-600 hover:rounded-b-sm hover:bg-red-100 dark:hover:bg-red-200 dark:text-red-400 dark:hover:text-red-400 cursor-pointer">
                             Logout
                         </button>
                     </form>
@@ -169,6 +168,23 @@
                 </li>
                 @endcan
 
+                @can('view-registrations')
+                <li>
+                    <a
+                    href="/registrations"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('registrations*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20">
+                        <path d="M0 0h20v20H0z" fill="none" />
+                        <path fill="currentColor" d="M3 1v18h14V1zm9 13H6v-1h6zm2-3H6v-1h8zm0-3H6V7h8zm0-3H6V4h8z" />
+                    </svg>
+
+                    <span class="ml-3">Registrasi</span>
+                    </a>
+                </li>
+                @endcan
+
                 {{-- REKAM MEDIS (ADMIN & DOKTER) --}}
                 @can('manage-medical-records')
                 <li>
@@ -199,5 +215,13 @@
     @livewireScripts
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+    <script>
+        document.addEventListener('livewire:navigated', () => {
+            if (typeof initFlowbite === 'function') {
+                initFlowbite();
+            }
+        });
+    </script>
 </body>
 </html>

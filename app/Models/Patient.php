@@ -12,6 +12,6 @@ class Patient extends Model
 {
     public function Registrations(): HasMany
     {
-        return $this->hasMany(Registration::class);
+        return $this->hasMany(Registration::class, 'patient_id');
     }
 }
