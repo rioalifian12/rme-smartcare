@@ -4,16 +4,16 @@
 
 ## Fitur Utama
 
-- ** Sistem Autentikasi**: Fitur Login/Logout menggunakan komponen interaktif Livewire.
-- ** Dashboard**: Visualisasi ringkasan aktivitas dan data penting aplikasi.
-- ** Kontrol Akses (Permission)**: Hak akses ketat menggunakan Middleware & Gate (`manage-master-data`, `manage-patients`, `view-registrations`, `manage-medical-records`).
-- ** Master Data**:
+- **Sistem Autentikasi**: Fitur Login/Logout menggunakan komponen interaktif Livewire.
+- **Dashboard**: Visualisasi ringkasan aktivitas dan data penting aplikasi.
+- **Kontrol Akses (Permission)**: Hak akses ketat menggunakan Middleware & Gate (`manage-master-data`, `manage-patients`, `view-registrations`, `manage-medical-records`).
+- **Master Data**:
     - **Manajemen Roles**: Pengaturan role dan permission pengguna.
     - **Manajemen Polyclinics**: Pengelolaan data poliklinik/poli.
     - **Manajemen Users**: Pengelolaan data pengguna/staf.
-- ** Manajemen Pasien**: Registrasi dan pendataan informasi pasien.
-- ** Manajemen Pendaftaran**: Pengelolaan antrean dan pendaftaran pasien ke unit/poli.
-- ** Manajemen Rekam Medis**: Pencatatan dan histori rekam medis pasien oleh tenaga medis.
+- **Manajemen Pasien**: Registrasi dan pendataan informasi pasien.
+- **Manajemen Pendaftaran**: Pengelolaan antrean dan pendaftaran pasien ke unit/poli.
+- **Manajemen Rekam Medis**: Pencatatan dan histori rekam medis pasien oleh tenaga medis.
 
 ## Stack Teknologi
 
