@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function polyclinic(): BelongsTo
     {
-        return $this->belongsTo(Polyclinic::class);
+        return $this->belongsTo(Polyclinic::class, 'poly_id');
     }
 
     public function medicalRecord(): HasMany
@@ -38,7 +38,7 @@ class User extends Authenticatable
 
     public function registration(): HasMany
     {
-        return $this->hasMany(Registration::class, 'doctor_id');
+        return $this->hasMany(Registration::class, 'nurse_id');
     }
 
     /**

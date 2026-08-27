@@ -70,7 +70,7 @@
                   <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-left block py-2 px-4 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-gray-600 dark:text-red-400 dark:hover:text-white cursor-pointer">
+                        <button type="submit" class="w-full text-left block py-2 px-4 text-sm text-red-600 hover:rounded-b-sm hover:bg-red-100 dark:hover:bg-gray-600 dark:text-red-400 dark:hover:text-white cursor-pointer">
                             Logout
                         </button>
                     </form>
@@ -87,69 +87,108 @@
           aria-label="Sidenav"
           id="drawer-navigation"
         >
-          <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-            <ul class="space-y-2">
-              <li>
-            <a
-              href="/dashboard"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-              </svg>
-              <span class="ml-3">Dashboard</span>
-            </a>
-          </li>
+            <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+                <ul class="space-y-2">
 
-              @if(auth()->check() && auth()->user()->role->role_name === 'Admin')
-              <li>
-                <a
-                  href="/users"
-                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('users*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
-                >
-                  <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                  </svg>
-                  <span class="ml-3">Data User</span>
-                </a>
-              </li>
-              @endif
+                <!-- Dashboard (Semua User) -->
+                <li>
+                    <a
+                    href="/dashboard"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('dashboard*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg
+                        aria-hidden="true"
+                        class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                    </svg>
+                    <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
 
-              @if(auth()->check() && in_array(auth()->user()->role->role_name, ['Admin', 'Perawat']))
-              <li>
-                <a
-                  href="/patients"
-                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('patients*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
-                >
-                  <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="ml-3">Data Pasien</span>
-                </a>
-              </li>
-              @endif
+                {{-- MASTER DATA (KHUSUS ADMIN) --}}
+                @can('manage-master-data')
+                <li>
+                    <a
+                    href="/users"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('users*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                    </svg>
+                    <span class="ml-3">Data User</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                    href="/roles"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('roles*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path fill="currentColor" fill-rule="evenodd" d="M1.25 12a5.75 5.75 0 0 1 10.8-2.75H21c.966 0 1.75.784 1.75 1.75v2.5a.75.75 0 0 1-.75.75h-2.25V16a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1-.75-.75v-1.75h-3.457A5.751 5.751 0 0 1 1.25 12M7 10a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" />
+                    </svg>
 
-              <li>
-                <a
-                  href="/medical-records"
-                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('medical-records*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
-                >
-                  <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="ml-3">Rekam Medis</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+                    <span class="ml-3">Data Role</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                    href="/polyclinics"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('polyclinics*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l1.293 1.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    <span class="ml-3">Data Poliklinik</span>
+                    </a>
+                </li>
+                @endcan
+
+                {{-- DATA PASIEN (ADMIN & PERAWAT) --}}
+                @can('manage-patients')
+                <li>
+                    <a
+                    href="/patients"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('patients*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="ml-3">Data Pasien</span>
+                    </a>
+                </li>
+                @endcan
+
+                {{-- REKAM MEDIS (ADMIN & DOKTER) --}}
+                @can('manage-medical-records')
+                <li>
+                    <a
+                    href="/medical-records"
+                    wire:navigate
+                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('medical-records*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}"
+                    >
+                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="ml-3">Rekam Medis</span>
+                    </a>
+                </li>
+                @endcan
+
+                </ul>
+            </div>
         </aside>
+
 
         <!-- MAIN CONTENT CONTAINER -->
         <main class="p-4 md:ml-64 h-auto pt-20">
