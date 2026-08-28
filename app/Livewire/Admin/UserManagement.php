@@ -2,13 +2,17 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Polyclinic;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Polyclinic;
-use Illuminate\Support\Facades\Hash;
 
+#[Layout('layouts.app')]
+#[Title(' User')]
 class UserManagement extends Component
 {
     use WithPagination;

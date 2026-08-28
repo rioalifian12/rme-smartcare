@@ -27,21 +27,32 @@ class Dashboard extends Component
             'total_poly' => Polyclinic::count(),
             'total_role' => Role::count(),
             'total_patients' => Patient::count(),
-            'total_registrations' => Registration::count(),
+
+            'total_registrations' => Registration::when($role !== 'Admin' && $user->poly_id, function ($query) use ($user) {
+                    $query->where('poly_id', $user->poly_id);
+                })->count(),
 
             'waiting_records' => Registration::where('status', 'waiting_doctor')
-                ->when($role === 'Dokter' && $user->poly_id, function ($query) use ($user) {
+                ->when($role !== 'Admin' && $user->poly_id, function ($query) use ($user) {
                     $query->where('poly_id', $user->poly_id);
                 })->count(),
 
             'completed_records' => MedicalRecord::when($role === 'Dokter', function ($query) use ($user) {
                     $query->where('doctor_id', $user->id);
+                })
+                ->when($role === 'Perawat' && $user->poly_id, function ($query) use ($user) {
+                    $query->whereHas('registration', function($q) use ($user) {
+                        $q->where('poly_id', $user->poly_id);
+                    });
                 })->count(),
         ];
 
         // DATA KUNJUNGAN PASIEN HARIAN (7 Hari Terakhir)
         $visitData = Registration::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
             ->where('created_at', '>=', now()->subDays(6))
+            ->when($role !== 'Admin' && $user->poly_id, function ($query) use ($user) {
+                $query->where('poly_id', $user->poly_id);
+            })
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();

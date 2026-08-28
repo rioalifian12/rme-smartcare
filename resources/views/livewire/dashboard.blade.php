@@ -43,15 +43,15 @@
         </div>
 
     @elseif($role === 'Perawat')
-        <!-- GRID PERAWAT (3 Kolom pas 1 baris) -->
+        <!-- GRID PERAWAT -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-green-500 block p-6 rounded-lg shadow-xs dark:bg-gray-800 dark:border dark:border-gray-700">
-                <h5 class="mb-3 text-xl font-semibold text-white">Data Pasien</h5>
+                <h5 class="mb-3 text-xl font-semibold text-white">Total Data Pasien</h5>
                 <p class="text-5xl font-extrabold text-white dark:text-green-400">{{ $stats['total_patients'] }}</p>
             </div>
 
             <div class="bg-teal-600 block p-6 rounded-lg shadow-xs dark:bg-gray-800 dark:border dark:border-gray-700">
-                <h5 class="mb-3 text-xl font-semibold text-white">Data Registrasi</h5>
+                <h5 class="mb-3 text-xl font-semibold text-white">Registrasi {{ auth()->user()->polyclinic->poly_name ?? 'Poli' }}</h5>
                 <p class="text-5xl font-extrabold text-white dark:text-teal-400">{{ $stats['total_registrations'] ?? 0 }}</p>
             </div>
 
@@ -62,10 +62,10 @@
         </div>
 
     @elseif($role === 'Dokter')
-        <!-- GRID DOKTER (2 Kolom pas 1 baris) -->
+        <!-- GRID DOKTER -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-teal-600 block p-6 rounded-lg shadow-xs dark:bg-gray-800 dark:border dark:border-gray-700">
-                <h5 class="mb-3 text-xl font-semibold text-white">Data Registrasi</h5>
+                <h5 class="mb-3 text-xl font-semibold text-white">Registrasi {{ auth()->user()->polyclinic->poly_name ?? 'Poli' }}</h5>
                 <p class="text-5xl font-extrabold text-white dark:text-teal-400">{{ $stats['total_registrations'] ?? 0 }}</p>
             </div>
 

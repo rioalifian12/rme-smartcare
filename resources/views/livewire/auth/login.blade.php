@@ -20,7 +20,7 @@
                 <form class="space-y-4 md:space-y-6" wire:submit="login">
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" wire:model="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@gmail.com" required>
+                        <input type="email" wire:model="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan email" required>
 
                         @error('email')
                             <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -31,7 +31,7 @@
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
 
                         <div class="relative" x-data="{ show: false }">
-                            <input :type="show ? 'text' : 'password'" wire:model="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <input :type="show ? 'text' : 'password'" wire:model="password" id="password" placeholder="Masukkan password" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
 
                             <button type="button" @click="show = !show" class="absolute end-1.5 bottom-1.5 px-3 py-1.5 cursor-pointer flex items-center justify-center">
                                 <svg :class="show ? 'hidden' : ''" class="w-6 h-6 text-gray-600 dark:text-white" xmlns="http://w3.org" width="1em" height="1em" viewBox="0 0 24 24">

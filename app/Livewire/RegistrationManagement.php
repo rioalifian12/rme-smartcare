@@ -30,6 +30,13 @@ class RegistrationManagement extends Component
     public $isEditOpen = false;
     public $isDeleteOpen = false;
 
+    public function mount()
+    {
+        if (auth()->user()->poly_id) {
+            $this->poly_id = auth()->user()->poly_id;
+        }
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -40,6 +47,9 @@ class RegistrationManagement extends Component
         $this->authorize('view-registrations');
 
         $registrations = Registration::with(['patient', 'polyclinic', 'nurse'])
+            ->when(auth()->user()->poly_id, function ($q) {
+                $q->where('poly_id', auth()->user()->poly_id);
+            })
             ->when($this->search, function ($q) {
                 $q->whereHas('patient', function ($p) {
                     $p->where('name', 'like', '%' . $this->search . '%')
@@ -74,6 +84,10 @@ class RegistrationManagement extends Component
     public function createRegistration()
     {
         $this->authorize('manage-registrations');
+
+        if (auth()->user()->poly_id) {
+            $this->poly_id = auth()->user()->poly_id;
+        }
 
         $this->validate([
             'patient_id' => 'required|exists:patients,id',
@@ -111,12 +125,17 @@ class RegistrationManagement extends Component
         $this->temperature = $reg->temperature;
         $this->weight = $reg->weight;
         $this->status = $reg->status;
+
         $this->isEditOpen = true;
     }
 
     public function updateRegistration()
     {
         $this->authorize('manage-registrations');
+
+        if (auth()->user()->poly_id) {
+            $this->poly_id = auth()->user()->poly_id;
+        }
 
         $this->validate([
             'patient_id' => 'required|exists:patients,id',
@@ -164,7 +183,7 @@ class RegistrationManagement extends Component
         $this->patient_id = null;
         $this->patient_search = '';
         $this->selected_patient_name = '';
-        $this->poly_id = null;
+        $this->poly_id = auth()->user()->poly_id ?? null;
         $this->systole = '';
         $this->diastole = '';
         $this->temperature = '';

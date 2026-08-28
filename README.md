@@ -1,6 +1,6 @@
 # RME SmartCare
 
-**RME SmartCare** adalah aplikasi Rekam Medis Elektronik (RME) dan manajemen klinik berbasis **Laravel** dan **Livewire**. Aplikasi ini menyediakan fitur manajemen master data, manajemen pasien, pendaftaran pasien, dan rekam medis dengan kontrol akses berbasis peran (_Role-Based Access Control_).
+**RME SmartCare** adalah aplikasi Rekam Medis Elektronik (RME) dan manajemen klinik berbasis **Laravel** dan **Livewire**. Aplikasi ini menyediakan fitur manajemen master data, manajemen pasien, pendaftaran pasien, dan rekam medis dengan kontrol akses berbasis peran (_Role-Based Access Control_). UI RME SmartCare sudah support atau menyesuaikan dengan Light Mode dan Dark Mode.
 
 ## Fitur Utama
 
@@ -12,7 +12,7 @@
     - **Manajemen Polyclinics**: Pengelolaan data poliklinik/poli.
     - **Manajemen Users**: Pengelolaan data pengguna/staf.
 - **Manajemen Pasien**: Registrasi dan pendataan informasi pasien.
-- **Manajemen Pendaftaran**: Pengelolaan antrean dan pendaftaran pasien ke unit/poli.
+- **Manajemen Pendaftaran**: Pengelolaan antrean dan pendaftaran pasien.
 - **Manajemen Rekam Medis**: Pencatatan dan histori rekam medis pasien oleh tenaga medis.
 
 ## Stack Teknologi

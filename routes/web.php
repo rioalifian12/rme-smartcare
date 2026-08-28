@@ -4,6 +4,7 @@ use App\Livewire\Admin\PolyclinicManagement;
 use App\Livewire\Admin\RoleManagement;
 use App\Livewire\Admin\UserManagement;
 use App\Livewire\Auth\Login;
+use App\Livewire\ChangePassword;
 use App\Livewire\Dashboard;
 use App\Livewire\MedicalRecordManagement;
 use App\Livewire\PatientManagement;
@@ -26,6 +27,8 @@ Route::post('/logout', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+    Route::get('/change-password', ChangePassword::class)->name('password.change');
 
     Route::middleware(['can:manage-master-data'])->group(function () {
         Route::get('/roles', RoleManagement::class)->name('roles');

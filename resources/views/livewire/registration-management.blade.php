@@ -124,7 +124,7 @@
                                 @if(strlen($patient_search) >= 1)
                                     <div class="absolute z-10 w-full bg-white border border-gray-200 rounded-base shadow-lg max-h-48 overflow-y-auto dark:bg-gray-800 dark:border-gray-700 mt-1">
                                         @forelse($searchedPatients as $sp)
-                                            <button type="button" wire:click="selectPatient({{ $sp->id }}, '{{ addslashes($sp->name) }}', '{{ $sp->medical_record_number }}')" class="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 border-b dark:border-gray-700 flex justify-between items-center cursor-pointer">
+                                            <button type="button" wire:click="selectPatient({{ $sp->id }}, '{{ addslashes($sp->name) }}', '{{ $sp->medical_record_number }}')" class="w-full text-left px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center cursor-pointer">
                                                 <div>
                                                     <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $sp->name }}</div>
                                                     <div class="text-xs text-gray-500 dark:text-gray-400">Tgl Lahir: {{ $sp->date_of_birth }}</div>
@@ -146,14 +146,20 @@
                     </div>
 
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Poli Tujuan</label>
-                        <select wire:model="poly_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-                            <option value="">-- Pilih Poliklinik --</option>
-                            @foreach($polyclinics as $pl)
-                                <option value="{{ $pl->id }}">{{ $pl->poly_name }}</option>
-                            @endforeach
-                        </select>
-                        @error('poly_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        <label for="poly_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Poliklinik Tujuan</label>
+                        @if(auth()->user()->poly_id !== 1)
+                            <input type="hidden" wire:model="poly_id">
+                            <input type="text" class="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:text-gray-300" value="{{ auth()->user()->polyclinic->poly_name ?? 'Poli Anda' }}" disabled>
+                            <span class="text-xs text-success dark:text-green-400 mt-1 block">Otomatis terisi berdasarkan penugasan poli Anda.</span>
+                        @else
+                            <select id="poly_id" wire:model="poly_id" class="px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-base focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="">-- Pilih Poliklinik --</option>
+                                @foreach($polyclinics as $poly)
+                                    <option value="{{ $poly->id }}">{{ $poly->poly_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('poly_id') <span class="text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                        @endif
                     </div>
 
                     <!-- Input Tanda Vital -->
@@ -198,15 +204,23 @@
                 <form wire:submit.prevent="updateRegistration" class="space-y-4">
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pasien Terpilih</label>
-                        <input type="text" value="{{ $selected_patient_name }}" class="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:text-gray-300" readonly>
+                        <input type="hidden" wire:model="patient_id">
+                        <input type="text" value="{{ $selected_patient_name }}" class="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:text-gray-300" disabled>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Poli Tujuan</label>
-                        <select wire:model="poly_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-                            @foreach($polyclinics as $pl)
-                                <option value="{{ $pl->id }}">{{ $pl->poly_name }}</option>
-                            @endforeach
-                        </select>
+                        @if(auth()->user()->poly_id)
+                            <input type="text" class="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded-base block w-full p-2.5 dark:bg-gray-700 dark:text-gray-300" value="{{ auth()->user()->polyclinic->poly_name ?? 'Poliklinik Tugas Anda' }}" disabled>
+                            <span class="text-xs text-success dark:text-green-400 mt-1 block">Otomatis terisi berdasarkan penugasan poli Anda.</span>
+                        @else
+                            <select id="edit_poly_id" wire:model="poly_id" class="px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-base focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="">-- Pilih Poliklinik --</option>
+                                @foreach($polyclinics as $poly)
+                                    <option value="{{ $poly->id }}">{{ $poly->poly_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('poly_id') <span class="text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                        @endif
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
